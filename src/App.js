@@ -15,6 +15,15 @@ import Dashboard from './components/Dashboard/';
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.handleChangeKey = this.handleChangeKey.bind(this);
+    }
+
+    handleChangeKey() {
+        console.log(this);
+    }
+
     render() {
         return (
             <Provider store={store}>
@@ -22,9 +31,12 @@ class App extends Component {
                     <div>
                         <AppBar position='static' color='default'>
                             <Toolbar>
-                                <Typography variant='title'>
+                                <Typography variant='title' style={{flex: 1}}>
                                     Chegg Assignment
                                 </Typography>
+                                <Link to='/'>
+                                    <Button color="inherit">Change API Key</Button>
+                                </Link>
                             </Toolbar>
                         </AppBar>
                         <Card>
