@@ -22,6 +22,13 @@ function updateIssues(repoName, issues) {
     }
 }
 
+export function rearrangeIssues(repoName, oldIndex, newIndex) {
+    return {
+        type: 'REARRANGE_ISSUES',
+        payload: { repoName, oldIndex, newIndex }
+    }
+}
+
 export function changeRepository(id) {
     return {
         type: 'CHANGE_REPOSITORY',

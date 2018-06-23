@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { sortedRepositorySelector, relevantIssuesSelector } from '../../providers';
 import { changeRepository, asyncUpdateIssues, rearrangeIssues } from '../../redux/actions';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+import Avatar from '@material-ui/core/Avatar';
+import moment from 'moment';
 
 const ListItemWithRepoChange = connect(
     null,
@@ -59,9 +61,23 @@ class Dashboard extends Component {
             issues,
             (issue, index) => {
                 const { title, updated_at: updatedAt, created_at: createdAt, id } = issue;
+                const formatedCreated = moment(createdAt).format('DD/MM/YYYY');
+                const formattedUpdated = moment(updatedAt).fromNow();
+                const avatars = _.map(
+                    _.get(issue, ['assignees']),
+                    assignee => _.get(assignee, 'avatar_url')
+                );
+
                 return (
                     <SortableIssue button key={id} index={index}>
-                        <ListItemText primary={title} secondary={createdAt} />
+                        {
+                            _.map(
+                                avatars,
+                                avatarUrl => <Avatar key={avatarUrl} src={avatarUrl} />
+                            )
+                        }
+                        <ListItemText primary={title} secondary={formatedCreated} />
+                        <ListItemText primary={`Updated ${formattedUpdated}`}/>
                     </SortableIssue>
                 )
             }
