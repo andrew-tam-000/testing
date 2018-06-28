@@ -1,34 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import reducer from './reducer';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
-import { restoreIssues } from './actions';
+import rootReducer from './reducers';
 import _ from 'lodash';
+import middleware from './middleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const cache = store => next => action => {
-    const {type, payload} = action;
-
-    const result = next(action);
-
-    if(type == 'REARRANGE_ISSUES' || type == 'UPDATE_ISSUES') {
-        const state = store.getState();
-        const apiKey = _.get(state, ['general', 'key']);
-        const issues = _.get(state, 'issues');
-
-        localStorage.setItem(apiKey, JSON.stringify(issues));
-    }
-    else if (type == 'RESET_REPOSITORIES') {
-        const state = store.getState();
-        const apiKey = _.get(state, ['general', 'key']);
-        const issues = JSON.parse(localStorage.getItem(apiKey));
-
-        store.dispatch(restoreIssues(issues));
-    }
-
-    return result;
-}
 
 const initialState = {
     repositories: [],
@@ -41,11 +16,9 @@ const initialState = {
 };
 
 const store = createStore(
-    reducer,
+    rootReducer,
     initialState,
-    composeEnhancers(
-        applyMiddleware(thunk, cache, logger)
-    )
+    composeEnhancers(middleware)
 );
 
 export default store;
