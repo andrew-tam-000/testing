@@ -35,8 +35,13 @@ export const relevantIssuesSelector = createSelector(
     state => _.get(state, 'issues'),
     (relevantRepository, issues) => {
         const name = _.get(relevantRepository, 'name');
-        const relevantIssues = _.values(_.get(issues, name));
-        return relevantIssues;
+        const relevantIssues = _.get(issues, name);
+        const orderedIssues = _.get(relevantIssues, 'order');
+        const issueMap = _.get(relevantIssues, 'byId');
+        return _.map(
+            orderedIssues,
+            issueId => issueMap[issueId]
+        );
     }
 );
 

@@ -53,12 +53,7 @@ export function asyncResetRepositories() {
 }
 
 export function asyncAddIssues(repoName, owner) {
-    return (dispatch, getState) => {
-        const state = getState();
-        const repositories = _.get(state, 'repositories');
-        const issues = _.get(state, 'issues');
-        const relevantIssues = _.get(state, ['issues', repoName]);
-
+    return dispatch => {
         return getIssues(repoName, owner)
             .then(
                 data => dispatch(addIssues(repoName, data))
