@@ -13,6 +13,8 @@ export default combineReducers({
     },
     issues: (state = {}, {payload, type}) => {
         switch(type) {
+            case 'RESTORE_ISSUES':
+                return _.assign({}, state, payload);
             case 'REARRANGE_ISSUES':
                 const wantedIssues = state[payload.repoName];
                 const { oldIndex, newIndex }  = payload;
