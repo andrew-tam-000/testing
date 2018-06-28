@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
-import { sortedRepositorySelector, relevantIssuesSelector } from '../../providers';
+import { sortedRepositorySelector, relevantIssuesSelector, relevantRepositorySelector } from '../../providers';
 import { changeRepository, asyncUpdateIssues, rearrangeIssues } from '../../redux/actions';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import Avatar from '@material-ui/core/Avatar';
@@ -106,13 +106,14 @@ class Dashboard extends Component {
 
 export default connect(
     state => {
-        const selectedRepository = _.get(state, ['general', 'selectedRepository']);
-        const repoName = _.get(state, ['repositories', selectedRepository, 'name']);
+        const selectedRepository = relevantRepositorySelector(state);
+        const repoName = _.get(selectedRepository, 'name');
+        const repositories = _.get(state, 'repositories');
 
         return {
             repoName,
             issues: relevantIssuesSelector(state),
-            repositories: sortedRepositorySelector(state)
+            repositories
         }
     }
 )(Dashboard);

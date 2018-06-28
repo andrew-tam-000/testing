@@ -1,11 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from './reducer';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-    repositories: { },
-    issues: { },
+    repositories: [],
+    issues: {},
     general: {
         //key: ''
         key: '1a1f08a198c491c6a1ce8b07ddbbcd4ae3a455d4',
@@ -17,5 +18,12 @@ const initialState = {
     }
 };
 
-const store = createStore(reducer, initialState, applyMiddleware(thunk, logger));
+const store = createStore(
+    reducer,
+    initialState,
+    composeEnhancers(
+        applyMiddleware(thunk, logger)
+    )
+);
+
 export default store;

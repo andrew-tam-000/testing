@@ -8,9 +8,9 @@ export function updateKey(key) {
     }
 }
 
-function addRepositories(repositories) {
+function resetRepositories(repositories) {
     return {
-        type: 'ADD_REPOSITORIES',
+        type: 'RESET_REPOSITORIES',
         payload: repositories
     }
 }
@@ -36,11 +36,11 @@ export function changeRepository(id) {
     }
 }
 
-export function asyncAddRepositories() {
+export function asyncResetRepositories() {
     return dispatch => {
         return getRepositories()
             .then(
-                data => dispatch(addRepositories(data))
+                data => dispatch(resetRepositories(data))
             )
     }
 }

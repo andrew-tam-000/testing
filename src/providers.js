@@ -7,21 +7,16 @@ export function getApiKey(key) {
     })
 };
 
-export const sortedRepositorySelector = createSelector(
-    state => _.get(state, ['general', 'repositorySort']),
-    state => _.get(state, 'repositories'),
-    ({key, direction}, repositories) => {
-        const values = _.values(repositories);
-        return _.orderBy(values, [key], [direction]);
-    }
-);
-
-export const relevantIssuesSelector = createSelector(
+export const relevantRepositorySelector = createSelector(
     state => _.get(state, ['general', 'selectedRepository']),
     state => _.get(state, 'repositories'),
+    (selectedRepository, repositories) => _.find(repositories, {id: selectedRepository })
+);
+export const relevantIssuesSelector = createSelector(
+    relevantRepositorySelector,
     state => _.get(state, 'issues'),
-    (selectedRepository, repositories, issues) => {
-        const name = _.get(repositories, [selectedRepository, 'name']);
+    (relevantRepository, issues) => {
+        const name = _.get(relevantRepository, 'name');
         const relevantIssues = _.values(_.get(issues, name));
         return relevantIssues;
     }

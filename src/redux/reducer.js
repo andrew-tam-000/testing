@@ -4,17 +4,9 @@ import { combineReducers } from 'redux';
 export default combineReducers({
     repositories: (state = {}, {payload, type}) => {
         switch(type) {
-            case 'ADD_REPOSITORIES':
-                const repositories = _.reduce(
-                    payload,
-                    (agg, repo) => {
-                        const id = _.get(repo, 'id');
-                        agg[id] = repo;
-                        return agg;
-                    },
-                    {}
-                );
-                return _.assign({}, state, repositories);
+
+            case 'RESET_REPOSITORIES':
+                return payload;
             default:
                 return state;
         }

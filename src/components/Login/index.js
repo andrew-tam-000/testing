@@ -1,37 +1,25 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { getApiKey } from '../../providers';
-import { asyncAddRepositories, updateKey } from '../../redux/actions';
+import { resetReposAndMoveToDashboard, updateApiKey } from '../../actionProviders';
 
-const TextFieldWithKey = connect(
+const TextFieldWithApiKey = connect(
     getApiKey('value'),
-    dispatch => ({
-        onChange: e => dispatch(updateKey(e.target.value))
-    })
+    updateApiKey('onChange')
 )(TextField);
 
 const ButtonToUpdateRepository = connect(
     null,
-    (dispatch, props) => ({
-        onClick: () => (
-            dispatch(asyncAddRepositories())
-                .then(
-                    () => props.history.push('/dashboard')
-                )
-        )
-    })
+    resetReposAndMoveToDashboard('onClick')
 )(Button);
 
 class Login extends Component {
     render() {
         return (
             <form>
-                <TextFieldWithKey
+                <TextFieldWithApiKey
                     id='name'
                     label='API Key'
                     placeholder='e.g. 1a1f08a198c491c6a1ce8b07ddbbcd4ae3a455d4'
