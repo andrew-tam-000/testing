@@ -16,9 +16,17 @@ const ButtonToUpdateRepository = connect(
 )(Button);
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+    onSubmit(e) {
+        e.preventDefault();
+        this.props.onSubmit(e);
+    }
     render() {
         return (
-            <form>
+            <form onSubmit={this.onSubmit}>
                 <TextFieldWithApiKey
                     id='name'
                     label='API Key'
@@ -34,4 +42,9 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const LoginWithSubmit = connect(
+    null,
+    resetReposAndMoveToDashboard('onSubmit')
+)(Login)
+
+export default LoginWithSubmit;
