@@ -6,7 +6,7 @@ export default (state = {}, {payload, type}) => {
             return _.assign({}, state, { key: payload });
         case 'CHANGE_REPOSITORY':
             const previousSelectedRepository = _.get(state, 'selectedRepository');
-            const selectedRepository = previousSelectedRepository == payload ? '' : payload;
+            const selectedRepository = previousSelectedRepository === payload ? '' : payload;
             return _.assign({}, state, { selectedRepository })
         default:
             return state;

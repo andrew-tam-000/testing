@@ -2,12 +2,11 @@ import _ from 'lodash';
 import { createSelector } from 'reselect'
 import { connect } from 'react-redux';
 import { changeRepositoryAndAddIssues } from './actionProviders';
-import { SortableContainer, SortableElement, } from 'react-sortable-hoc';
+import { SortableElement, } from 'react-sortable-hoc';
 
 import moment from 'moment';
 
 import React from 'react';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';

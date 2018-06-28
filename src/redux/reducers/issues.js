@@ -8,7 +8,7 @@ export default (state = {}, {payload, type}) => {
             const wantedIssues = _.get(state, [payload.repoName, 'order'], []);
             const { oldIndex, newIndex }  = payload;
 
-            if (oldIndex == newIndex) {
+            if (oldIndex === newIndex) {
                 return state;
             }
 

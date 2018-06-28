@@ -1,5 +1,4 @@
 import { getRepositories, getIssues } from '../api/';
-import _ from 'lodash';
 
 export function updateKey(key) {
     return {

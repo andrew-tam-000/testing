@@ -2,8 +2,6 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import List from '../List/';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
 import { updateIssueOrder } from '../../redux/actionProviders';
 import { relevantRepositorySelector, repositoryList, issueList } from '../../redux/providers';
@@ -34,7 +32,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { repositories, selectedRepository } = this.props;
+        const { selectedRepository } = this.props;
 
         const gridWidth = selectedRepository ? 6 : 12;
 
