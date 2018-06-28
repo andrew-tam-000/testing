@@ -1,35 +1,33 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
+import List from '../List/';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
-import { sortedRepositorySelector, relevantIssuesSelector, relevantRepositorySelector } from '../../providers';
+import { updateIssueOrder } from '../../actionProviders';
+import { sortedRepositorySelector, relevantIssuesSelector, relevantRepositorySelector, repositoryList, issueList } from '../../providers';
 import { changeRepository, asyncUpdateIssues, rearrangeIssues } from '../../redux/actions';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import Avatar from '@material-ui/core/Avatar';
 import moment from 'moment';
 
-const ListItemWithRepoChange = connect(
-    null,
-    (dispatch, props) => ({
-        onClick: () => {
-            dispatch(changeRepository(props.id));
-            dispatch(asyncUpdateIssues(props.name, props.owner));
-        }
-    })
-)(ListItem);
-
-const SortableIssue = SortableElement( props => <ListItem {...props}/>);
-const SortableIssueList = SortableContainer( ({repoName, ...props}) => <List {...props}/>);
+const RepositoryList = connect(repositoryList)(List);
 
 const SortableIssueListWithUpdate = connect(
+    issueList,
     null,
-    (dispatch, props) => ({
-        onSortEnd: ({oldIndex, newIndex}) => dispatch(rearrangeIssues(props.repoName, oldIndex, newIndex))
-    })
-)(SortableIssueList);
+    (stateProps, dispatchProps, {repoName, ...ownProps}) => {
+        const { dispatch } = dispatchProps;
+        const actionProps = updateIssueOrder('onSortEnd')(dispatch, { repoName })
+        return _.assign(
+            {},
+            stateProps,
+            ownProps,
+            actionProps
+        );
+    }
+)(List);
 
 class Dashboard extends Component {
 
@@ -40,61 +38,22 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { repositories, issues, repoName} = this.props;
+        const { repositories, selectedRepository } = this.props;
 
-        const gridWidth = issues.length ? 6 : 12;
+        const gridWidth = selectedRepository ? 6 : 12;
 
-        const repositoryRows = _.map(
-            repositories,
-            repo => {
-                const { name, id, created_at: createdAt } = repo;
-                const owner = _.get(repo, ['owner', 'login']);
-                return (
-                    <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name}>
-                        <ListItemText primary={name} secondary={createdAt} />
-                    </ListItemWithRepoChange>
-                )
-            }
-        );
-
-        const issueRows = _.map(
-            issues,
-            (issue, index) => {
-                const { title, updated_at: updatedAt, created_at: createdAt, id } = issue;
-                const formatedCreated = moment(createdAt).format('DD/MM/YYYY');
-                const formattedUpdated = moment(updatedAt).fromNow();
-                const avatars = _.map(
-                    _.get(issue, ['assignees']),
-                    assignee => _.get(assignee, 'avatar_url')
-                );
-
-                return (
-                    <SortableIssue button key={id} index={index}>
-                        {
-                            _.map(
-                                avatars,
-                                avatarUrl => <Avatar key={avatarUrl} src={avatarUrl} />
-                            )
-                        }
-                        <ListItemText primary={title} secondary={formatedCreated} />
-                        <ListItemText primary={`Updated ${formattedUpdated}`}/>
-                    </SortableIssue>
-                )
-            }
-        );
+        const repoName = _.get(selectedRepository, 'name');
 
         return (
             <Grid container>
                 <Grid item xs={gridWidth}>
-                    <List>
-                        { repositoryRows }
-                    </List>
+                    <RepositoryList/>
                 </Grid>
                 {
-                    issues.length ? (
-                        <SortableIssueListWithUpdate repoName={repoName}>
-                            { issueRows }
-                        </SortableIssueListWithUpdate>
+                    selectedRepository ? (
+                        <Grid item xs={gridWidth}>
+                            <SortableIssueListWithUpdate isSortable={true} repoName={repoName}/>
+                        </Grid>
                     ) : (
                         null
                     )
@@ -106,14 +65,8 @@ class Dashboard extends Component {
 
 export default connect(
     state => {
-        const selectedRepository = relevantRepositorySelector(state);
-        const repoName = _.get(selectedRepository, 'name');
         const repositories = _.get(state, 'repositories');
-
-        return {
-            repoName,
-            issues: relevantIssuesSelector(state),
-            repositories
-        }
+        const selectedRepository = relevantRepositorySelector(state);
+        return { repositories, selectedRepository }
     }
 )(Dashboard);
