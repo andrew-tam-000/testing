@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getApiKey } from '../../providers';
-import { resetReposAndMoveToDashboard, updateApiKey } from '../../actionProviders';
+import { getApiKey } from '../../redux/providers';
+import { resetReposAndMoveToDashboard, updateApiKey } from '../../redux/actionProviders';
 
 const TextFieldWithApiKey = connect(
     getApiKey('value'),

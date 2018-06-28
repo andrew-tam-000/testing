@@ -1,4 +1,4 @@
-import { asyncResetRepositories, updateKey, changeRepository, asyncUpdateIssues, rearrangeIssues } from './redux/actions';
+import { asyncResetRepositories, updateKey, changeRepository, asyncUpdateIssues, rearrangeIssues } from './actions';
 
 export function resetReposAndMoveToDashboard(key) {
     return (dispatch, props) => ({
