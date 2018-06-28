@@ -3,6 +3,7 @@ import _ from 'lodash';
 export default (state = {}, {payload, type}) => {
     switch(type) {
         case 'RESTORE_ISSUES':
+            // TODO: Let's only restore the 'order' keys
             return _.assign({}, state, payload);
         case 'REARRANGE_ISSUES':
             const wantedIssues = _.get(state, [payload.repoName, 'order'], []);
@@ -43,9 +44,10 @@ export default (state = {}, {payload, type}) => {
                 issue => {
                     const id = _.get(issue, 'id');
                     if (!_.get(prevById, id)) {
-                        newById[id] = issue;
                         newOrder.push(id);
                     }
+                    // Update all issues, in case there is new info
+                    newById[id] = issue;
                 }
             );
 
