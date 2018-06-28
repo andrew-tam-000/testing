@@ -27,10 +27,10 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div>
+                    <div className='container'>
                         <AppBar position='static' color='default'>
                             <Toolbar>
-                                <Typography variant='title' style={{flex: 1}}>
+                                <Typography variant='title' className='full-flex'>
                                     Chegg Assignment
                                 </Typography>
                                 <Link to='/'>
@@ -38,8 +38,8 @@ class App extends Component {
                                 </Link>
                             </Toolbar>
                         </AppBar>
-                        <Card>
-                            <CardContent>
+                        <Card className='full-flex'>
+                            <CardContent className='full-flex'>
                                 <Route exact path='/' component={Login}/>
                                 <Route exact path='/dashboard' component={Dashboard}/>
                             </CardContent>

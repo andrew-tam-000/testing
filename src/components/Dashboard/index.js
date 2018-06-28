@@ -40,12 +40,12 @@ class Dashboard extends Component {
 
         return (
             <Grid container>
-                <Grid item xs={gridWidth}>
+                <Grid className='scrollable' item xs={gridWidth}>
                     <RepositoryList/>
                 </Grid>
                 {
                     selectedRepository ? (
-                        <Grid item xs={gridWidth}>
+                        <Grid className='scrollable' item xs={gridWidth}>
                             <SortableIssueListWithUpdate isSortable={true} repoName={repoName}/>
                         </Grid>
                     ) : (
