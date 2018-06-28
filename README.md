@@ -8,5 +8,4 @@ In order to run and setup this project, please run the following:
 # TODO
 
 * Remove 'owner' in getIssues
-* Show which project is seelcted
-* Implement scrollable pane
+* Show number of issues

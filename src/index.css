@@ -5,7 +5,7 @@ html, body, #root {
   height: 100%;
 }
 
-.container {
+.vertical-pane {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -22,4 +22,8 @@ html, body, #root {
 
 .scrollable {
     overflow: auto;
+}
+
+.app .active {
+    background-color: rgba(0, 0, 0, 0.08);
 }

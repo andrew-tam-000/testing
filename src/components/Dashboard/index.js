@@ -5,6 +5,7 @@ import List from '../List/';
 import { connect } from 'react-redux';
 import { updateIssueOrder } from '../../redux/actionProviders';
 import { relevantRepositorySelector, repositoryList, issueList } from '../../redux/providers';
+import Typography from '@material-ui/core/Typography';
 
 const RepositoryList = connect(repositoryList)(List);
 
@@ -45,8 +46,9 @@ class Dashboard extends Component {
                 </Grid>
                 {
                     selectedRepository ? (
-                        <Grid className='scrollable' item xs={gridWidth}>
-                            <SortableIssueListWithUpdate isSortable={true} repoName={repoName}/>
+                        <Grid item xs={gridWidth} className='vertical-pane'>
+                            <Typography variant='display1'>{ repoName }</Typography>
+                            <SortableIssueListWithUpdate isSortable={true} repoName={repoName} className='scrollable'/>
                         </Grid>
                     ) : (
                         null

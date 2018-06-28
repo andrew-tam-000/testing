@@ -27,7 +27,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div className='container'>
+                    <div className='vertical-pane'>
                         <AppBar position='static' color='default'>
                             <Toolbar>
                                 <Typography variant='title' className='full-flex'>

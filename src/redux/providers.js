@@ -45,16 +45,20 @@ export const relevantIssuesSelector = createSelector(
 );
 
 export function repositoryList(state) {
+
     const repositories = _.get(state, 'repositories');
+    const relevantRepository = relevantRepositorySelector(state);
+
     return {
         items: _.map(
             repositories,
             repo => {
                 const { name, id, created_at: createdAt } = repo;
                 const owner = _.get(repo, ['owner', 'login']);
+                const className = _.get(relevantRepository, 'id') === id ? 'active' : ''; 
                 return {
                     content: (
-                        <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name}>
+                        <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name} className={className}>
                             <ListItemText primary={name} secondary={createdAt} />
                         </ListItemWithRepoChange>
                     ),
