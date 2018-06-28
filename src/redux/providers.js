@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect'
 import { connect } from 'react-redux';
-import { changeRepositoryAndUpdateIssues } from './actionProviders';
+import { changeRepositoryAndAddIssues } from './actionProviders';
 import { SortableContainer, SortableElement, } from 'react-sortable-hoc';
 
 import moment from 'moment';
@@ -14,7 +14,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 const ListItemWithRepoChange = connect(
     null,
-    changeRepositoryAndUpdateIssues('onClick')
+    changeRepositoryAndAddIssues('onClick')
 )(ListItem);
 
 export function getApiKey(key) {

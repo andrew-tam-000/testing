@@ -15,9 +15,9 @@ function resetRepositories(repositories) {
     }
 }
 
-function updateIssues(repoName, issues) {
+function addIssues(repoName, issues) {
     return {
-        type: 'UPDATE_ISSUES',
+        type: 'ADD_ISSUES',
         payload: { repoName, issues }
     }
 }
@@ -52,21 +52,16 @@ export function asyncResetRepositories() {
     }
 }
 
-export function asyncUpdateIssues(repoName, owner) {
+export function asyncAddIssues(repoName, owner) {
     return (dispatch, getState) => {
         const state = getState();
         const repositories = _.get(state, 'repositories');
         const issues = _.get(state, 'issues');
         const relevantIssues = _.get(state, ['issues', repoName]);
 
-        // If we have alrady loaded issues, do nothing
-        if (_.size(relevantIssues)) {
-            return;
-        }
-
         return getIssues(repoName, owner)
             .then(
-                data => dispatch(updateIssues(repoName, data))
+                data => dispatch(addIssues(repoName, data))
             )
         ;
     }

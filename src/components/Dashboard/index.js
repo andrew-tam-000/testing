@@ -6,11 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
 import { updateIssueOrder } from '../../redux/actionProviders';
-import { sortedRepositorySelector, relevantIssuesSelector, relevantRepositorySelector, repositoryList, issueList } from '../../redux/providers';
-import { changeRepository, asyncUpdateIssues, rearrangeIssues } from '../../redux/actions';
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
-import Avatar from '@material-ui/core/Avatar';
-import moment from 'moment';
+import { relevantRepositorySelector, repositoryList, issueList } from '../../redux/providers';
 
 const RepositoryList = connect(repositoryList)(List);
 

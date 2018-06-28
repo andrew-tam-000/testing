@@ -25,7 +25,7 @@ export default (state = {}, {payload, type}) => {
             ];
 
             return _.assign({}, state, { [payload.repoName]: rearrangedIssues});
-        case 'UPDATE_ISSUES':
+        case 'ADD_ISSUES':
             return _.assign({}, state, { [payload.repoName]: payload.issues});
         default:
             return state;

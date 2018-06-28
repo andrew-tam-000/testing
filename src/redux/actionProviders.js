@@ -1,4 +1,4 @@
-import { asyncResetRepositories, updateKey, changeRepository, asyncUpdateIssues, rearrangeIssues } from './actions';
+import { asyncResetRepositories, updateKey, changeRepository, asyncAddIssues, rearrangeIssues } from './actions';
 
 export function resetReposAndMoveToDashboard(key) {
     return (dispatch, props) => ({
@@ -17,11 +17,11 @@ export function updateApiKey(key) {
     })
 }
 
-export function changeRepositoryAndUpdateIssues(key) {
+export function changeRepositoryAndAddIssues(key) {
     return (dispatch, props) => ({
         [key]: () => {
             dispatch(changeRepository(props.id));
-            dispatch(asyncUpdateIssues(props.name, props.owner));
+            dispatch(asyncAddIssues(props.name, props.owner));
         }
     })
 }
