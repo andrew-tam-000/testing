@@ -1,4 +1,6 @@
 # Getting Started
+First clone the project:
+    * git clone https://github.com/andrew-tam-000/testing.git
 
 In order to run and build this project, please execute the following commands:
 
