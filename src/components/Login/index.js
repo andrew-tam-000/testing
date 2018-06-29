@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getApiKey } from '../../redux/providers';
 import { resetReposAndMoveToDashboard, updateApiKey } from '../../redux/actionProviders';
+import { getApiKey } from '../../redux/providers';
 
 const TextFieldWithApiKey = connect(
     getApiKey('value'),
@@ -42,9 +43,8 @@ class Login extends Component {
     }
 }
 
-const LoginWithSubmit = connect(
-    null,
-    resetReposAndMoveToDashboard('onSubmit')
-)(Login)
+Login.propTypes = {
+    onSubmit: PropTypes.func
+};
 
-export default LoginWithSubmit;
+export default Login;

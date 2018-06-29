@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import List from '../List/';
 import { connect } from 'react-redux';
@@ -59,10 +60,9 @@ class Dashboard extends Component {
     }
 }
 
-export default connect(
-    state => {
-        const repositories = _.get(state, 'repositories');
-        const selectedRepository = relevantRepositorySelector(state);
-        return { repositories, selectedRepository }
-    }
-)(Dashboard);
+Dashboard.propTypes = {
+    repositories: PropTypes.array,
+    selectedRepository: PropTypes.string
+};
+
+export default Dashboard;

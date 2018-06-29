@@ -3,7 +3,6 @@ import _ from 'lodash';
 import store from '../redux/store';
 
 const root = 'https://api.github.com';
-const username = 'andrewtam000';
 
 // Use params for 'get' and data for 'post'
 function rootRequest({method, url, data, params}) {
@@ -20,7 +19,6 @@ function rootRequest({method, url, data, params}) {
         data,
         params,
         auth: {
-            username,
             password
         }
     });
