@@ -35,7 +35,7 @@ export function getRepositories() {
 
 export function getIssues(repoName, owner) {
     return rootRequest({
-        url: `/repos/${owner}/${repoName}/issues`,
+        url: `/repos/${owner}/${repoName}/issues?rand=${Math.random()}`,
         method: 'GET'
     })
         .then( ({data}) => data)
