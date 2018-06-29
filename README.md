@@ -6,10 +6,5 @@ In order to run and setup this project, please run the following:
 * npm start
 
 # TODO
-
-* Remove 'owner' in getIssues
-* Show number of issues
-* Only updated the order for the issue cache
-* Issues API only returs updated issues. Please account for this!
-* Also need to handle server side portion of this (stored data doesn't match cached data)
-* List issues per repo
+* Handle the case where an issue no longer exists, but gets cached into the persistent value
+* Issues API only returs /open/ issues - need to make sure this is accounted for

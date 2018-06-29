@@ -53,13 +53,14 @@ export function repositoryList(state) {
         items: _.map(
             repositories,
             repo => {
-                const { name, id, created_at: createdAt } = repo;
+                const { name, id, created_at: createdAt, open_issues_count: openIssuesCount } = repo;
                 const owner = _.get(repo, ['owner', 'login']);
                 const className = _.get(relevantRepository, 'id') === id ? 'active' : ''; 
+                const issueText = openIssuesCount ? `${openIssuesCount} Issues` : 'No issues!';
                 return {
                     content: (
                         <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name} className={className}>
-                            <ListItemText primary={name} secondary={createdAt} />
+                            <ListItemText primary={[name, issueText].join(' - ')} secondary={createdAt} />
                         </ListItemWithRepoChange>
                     ),
                 }
