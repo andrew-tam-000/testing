@@ -6,6 +6,12 @@ In order to run and build this project, please execute the following commands:
     * npm run build
     * npm run production-server
 
+    * Or simply `npm install && npm run build && npm run production-server`
+
+# Running test suite
+
+    * npm test
+
 # Server-Side Integration
 
 The assumption here is that we will persist all the ordered issues per repository on a per-API-key basis.

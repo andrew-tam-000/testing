@@ -19,10 +19,12 @@ describe('Correct number of children are rendered', () => {
     test('Multiple children', () => {
         const items = [
             {
-                content: <div key='1'>hello</div>
+                key: 1,
+                children: 'hello'
             },
             {
-                content: <div key='2'>bye bye</div>
+                key: 2,
+                children: 'bye bye'
             }
         ];
 
@@ -39,7 +41,8 @@ describe('Correct number of children are rendered', () => {
     test('One child', () => {
         const items = [
             {
-                content: <div key='1'>Hi</div>
+                key: 1,
+                children: 'Hi'
             }
         ];
         const wrapper = shallow(<List items={items}/>);
@@ -70,7 +73,8 @@ describe('Empty message is portrayed correctly', () => {
     test('Message not shown when there are items', () => {
         const items = [
             {
-                content: <div key='1'>hi</div>
+                key: 1,
+                children: 'hi'
             }
         ];
         const wrapper = shallow(<List items={items}/>);
@@ -85,10 +89,12 @@ describe('Sortable correctly replaces material list', () => {
     test('Material list is present when there are items', () => {
         const items = [
             {
-                content: <div key='1'>hello</div>
+                key: 1,
+                children: 'hello'
             },
             {
-                content: <div key='2'>bye bye</div>
+                key: 2,
+                children: 'bye bye'
             }
         ];
         const wrapper = shallow(<List items={items}/>);
@@ -98,10 +104,14 @@ describe('Sortable correctly replaces material list', () => {
     test('Material list is not present when there are items and its sortable', () => {
         const items = [
             {
-                content: <div key='1'>hello</div>
+                key: 1,
+                children: 'hello',
+                index: 1
             },
             {
-                content: <div key='2'>bye bye</div>
+                key: 2,
+                children: 'bye bye',
+                index: 2
             }
         ];
 
