@@ -1,9 +1,10 @@
 # Getting Started
 
-In order to run and setup this project, please run the following:
+In order to run and build this project, please execute the following commands:
 
     * npm install
-    * npm start
+    * npm run build
+    * npm run production-server
 
 # Server-Side Integration
 
