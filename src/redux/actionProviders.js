@@ -19,9 +19,9 @@ export function updateApiKey(key) {
 
 export function changeRepositoryAndAddIssues(key) {
     return (dispatch, props) => ({
-        [key]: () => {
-            dispatch(changeRepository(props.id));
-            dispatch(asyncAddIssues(props.name, props.owner));
+        [key]: (id, name, owner) => {
+            dispatch(changeRepository(id));
+            dispatch(asyncAddIssues(name, owner));
         }
     })
 }

@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import List from '../List/';
 import { connect } from 'react-redux';
-import { updateIssueOrder } from '../../redux/actionProviders';
+import { updateIssueOrder, changeRepositoryAndAddIssues  } from '../../redux/actionProviders';
 import { relevantRepositorySelector, repositoryList, issueList } from '../../redux/providers';
 import Typography from '@material-ui/core/Typography';
 
-const RepositoryList = connect(repositoryList)(List);
+const RepositoryList = connect(repositoryList, changeRepositoryAndAddIssues('handleItemClick'))(List);
 
 const SortableIssueListWithUpdate = connect(
     issueList,

@@ -6,23 +6,28 @@ import MaterialList from '@material-ui/core/List';
 import MaterialListItem from '@material-ui/core/ListItem';
 import MaterialListItemText from '@material-ui/core/ListItemText';
 
-import { SortableContainer } from 'react-sortable-hoc';
-
-
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 const SortableIssueList = SortableContainer( ({...props}) => <MaterialList {...props}/>);
+const SortableIssue = SortableElement( props => <MaterialListItem {...props}/>);
 
 class List extends Component {
     render() {
-        const { items, isSortable, ...props } = this.props;
+        const { items, isSortable, handleItemClick, ...props } = this.props;
 
         const ListComponent = isSortable ? SortableIssueList : MaterialList;
+        const ListItemComponent = isSortable ? SortableIssue : MaterialListItem;
 
         return items && items.length ? (
             <ListComponent {...props}>
                 {
                     _.map(
                         items,
-                        ({content}) => content
+                        ({handleItemClickArgs, ...listItemProps}) => (
+                            <ListItemComponent
+                                {...listItemProps}
+                                onClick={() => handleItemClickArgs && handleItemClick && handleItemClick.apply(null, handleItemClickArgs)}
+                            />
+                        )
                     )
                 }
             </ListComponent>
@@ -38,11 +43,11 @@ class List extends Component {
 
 List.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
-        content: PropTypes.element,
-        key: PropTypes.integer
+        onItemClickArgs: PropTypes.array
     })),
     emptyMessage: PropTypes.string,
-    isSortable: PropTypes.bool
+    isSortable: PropTypes.bool,
+    handleItemClick: PropTypes.func
 };
 
 export default List;

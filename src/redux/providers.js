@@ -1,28 +1,17 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect'
-import { connect } from 'react-redux';
-import { changeRepositoryAndAddIssues } from './actionProviders';
-import { SortableElement, } from 'react-sortable-hoc';
 
 import moment from 'moment';
 
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-
-const ListItemWithRepoChange = connect(
-    null,
-    changeRepositoryAndAddIssues('onClick')
-)(ListItem);
 
 export function getApiKey(key) {
     return state => ({
         [key]: _.get(state, ['general', 'key'])
     })
 };
-
-const SortableIssue = SortableElement( props => <ListItem {...props}/>);
 
 export const relevantRepositorySelector = createSelector(
     state => _.get(state, ['general', 'selectedRepository']),
@@ -59,11 +48,14 @@ export function repositoryList(state) {
                 const issueText = openIssuesCount ? `${openIssuesCount} Issues` : 'No issues!';
                 const formatedCreated = moment(createdAt).format('DD/MM/YYYY');
                 return {
-                    content: (
-                        <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name} className={className}>
-                            <ListItemText primary={[name, issueText].join(' - ')} secondary={formatedCreated} />
-                        </ListItemWithRepoChange>
-                    ),
+                    handleItemClickArgs: [id, name, owner],
+                    button: true,
+                    key: id,
+                    id,
+                    owner,
+                    name,
+                    className,
+                    children: <ListItemText primary={[name, issueText].join(' - ')} secondary={formatedCreated} />
                 }
             }
         )
@@ -87,8 +79,11 @@ export function issueList(state) {
                 );
 
                 return {
-                    content: (
-                        <SortableIssue button key={id} index={index}>
+                    button: true,
+                    key: id,
+                    index,
+                    children: (
+                        <React.Fragment>
                             {
                                 _.map(
                                     avatars,
@@ -97,7 +92,7 @@ export function issueList(state) {
                             }
                             <ListItemText primary={title} secondary={formatedCreated} />
                             <ListItemText primary={`Updated ${formattedUpdated}`}/>
-                        </SortableIssue>
+                        </React.Fragment>
                     )
                 }
             }
