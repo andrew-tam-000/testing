@@ -57,10 +57,11 @@ export function repositoryList(state) {
                 const owner = _.get(repo, ['owner', 'login']);
                 const className = _.get(relevantRepository, 'id') === id ? 'active' : ''; 
                 const issueText = openIssuesCount ? `${openIssuesCount} Issues` : 'No issues!';
+                const formatedCreated = moment(createdAt).format('DD/MM/YYYY');
                 return {
                     content: (
                         <ListItemWithRepoChange button key={id} id={id} owner={owner} name={name} className={className}>
-                            <ListItemText primary={[name, issueText].join(' - ')} secondary={createdAt} />
+                            <ListItemText primary={[name, issueText].join(' - ')} secondary={formatedCreated} />
                         </ListItemWithRepoChange>
                     ),
                 }
